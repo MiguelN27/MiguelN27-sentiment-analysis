@@ -1,3 +1,10 @@
 __pycache__
 .env
 .learn
+.venv/
+.cache/huggingface/
+models--*/
+*.safetensors
+models/*.bin
+models/*.pt
+models/*.pth

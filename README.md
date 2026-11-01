@@ -80,6 +80,24 @@ To run the application, execute the app.py script from the root directory of the
 python src/app.py
 ```
 
+### Review Sentiment Workflow
+
+Use Python 3.12 with the exact versions in `requirements.txt`. This review workflow does not require a database or a `.env` file.
+
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python src/app.py
+python -m unittest discover -s tests
+```
+
+The script reads `data/raw/reviews.csv` and writes `data/processed/reviews_with_sentiment.csv`, preserving input rows and adding predicted stars, sentiment, top-label scores and model provenance. Default paths work independently of the current directory; custom paths and batching are available through `--input`, `--output` and `--batch-size`.
+
+The model and tokenizer are fixed to `nlptown/bert-base-multilingual-uncased-sentiment` at revision `8f6f4e3a8f70be4b65d3a4a8762b6d781cda240d`. The first inference run needs network access and downloads approximately 669 MB of model weights into the external Hugging Face cache. Do not copy or commit weights into this repository.
+
+Open `src/explore.ipynb` with the same Python environment for the analysis and saved outputs. It contains a 20-review assistant-drafted audit requiring human review. Scores are not calibrated sentiment probabilities, and disagreements with recorded ratings are not automatically confirmed model errors.
+
 ## Adding Models
 
 To add SQLAlchemy model classes, create new Python script files within the models/ directory. These classes should be defined according to your database schema.
